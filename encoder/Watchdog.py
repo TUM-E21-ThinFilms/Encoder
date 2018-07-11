@@ -24,15 +24,19 @@ class PositionWatchdog(StoppableThread):
     def do_execute(self):
         self.initialize()
 
-        self._encoder.clear_buffer()
-        self._encoder.read()
+        try:
+            self._encoder.clear_buffer()
+            self._encoder.read()
 
-        data = Data({})
+            data = Data({})
 
-        self._set_theta(data)
-        self._set_z(data)
+            self._set_theta(data)
+            self._set_z(data)
 
-        self._comm.save(data)
+            self._comm.save(data)
+        except BaseException as e:
+            print(e)
+            # continue...
 
     def _set_theta(self, data):
         data.set_position_theta(self._theta.get_angle())

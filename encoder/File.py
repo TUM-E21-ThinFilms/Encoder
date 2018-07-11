@@ -18,7 +18,7 @@ class File(AbstractCommunication):
             return data
 
     def save(self, data):
-        with open(self._path, 'rw') as f:
+        with open(self._path, 'w') as f:
             raw = self._encoder.encode(data)
             f.write(raw)
             return True

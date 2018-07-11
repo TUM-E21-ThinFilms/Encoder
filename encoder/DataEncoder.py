@@ -70,7 +70,7 @@ class ErrorData(Data):
 
         self._dict[self.KEY_ERROR] = True
         if not exception is None:
-            self._dict[self.KEY_EXCEPTION] = exception
+            self._dict[self.KEY_EXCEPTION] = str(exception)
 
     def _error(self):
         raise RuntimeError('Encoder data cannot be read')

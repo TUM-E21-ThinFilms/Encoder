@@ -13,12 +13,12 @@ class File(AbstractCommunication):
         self._encoder = DataEncoder()
 
     def load(self):
-        with open(self._path) as f:
+        with open(self._path, 'r') as f:
             data = self._encoder.decode(f.read())
             return data
 
     def save(self, data):
-        with open(self._path) as f:
+        with open(self._path, 'rw') as f:
             raw = self._encoder.encode(data)
             f.write(raw)
             return True

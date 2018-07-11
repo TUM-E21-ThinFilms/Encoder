@@ -90,7 +90,9 @@ class DataEncoder(object):
     def __init__(self):
         pass
 
-    def encode(self, object: Data):
+    def encode(self, object):
+        if not isinstance(object, Data):
+            raise RuntimeError("object is not an instance of Data")
         return json.dumps(object.get_dict())
 
     def decode(self, encoded_object):

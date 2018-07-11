@@ -1,6 +1,6 @@
 from encoder.DataEncoder import Data, ErrorData
 from encoder.File import AbstractCommunication
-from e21_util.simultaneous import StoppableThread
+from e21_util.simultaneous import StoppableThread, StopException
 from devcontroller.encoder import EncoderFactory
 import time
 
@@ -36,7 +36,7 @@ class PositionWatchdog(StoppableThread):
 
             self._comm.save(data)
         except BaseException as e:
-            if isinstance(e, KeyboardInterrupt):
+            if isinstance(e, KeyboardInterrupt) or isinstance(e, StopException):
                 raise e
             self._comm.save(ErrorData({}))
         time.sleep(0.1)

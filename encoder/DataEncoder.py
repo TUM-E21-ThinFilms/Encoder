@@ -18,6 +18,15 @@ class Data(object):
         dict[self.KEY_TIME] = time.time()
         self._dict = dict
 
+    def get_exception(self):
+        return self._dict[self.KEY_EXCEPTION]
+
+    def set_exception(self, exception):
+        self._dict[self.KEY_EXCEPTION] = str(exception)
+
+    def add_exception(self, excp):
+        self._dict[self.KEY_EXCEPTION] += str(excp)
+
     def get_trigger_count(self):
         return self._dict[self.KEY_TRIGGER_COUNT]
 
@@ -70,7 +79,7 @@ class ErrorData(Data):
 
         self._dict[self.KEY_ERROR] = True
         if not exception is None:
-            self._dict[self.KEY_EXCEPTION] = str(exception)
+            self.set_exception(exception)
 
     def _error(self):
         raise RuntimeError('Encoder data cannot be read')

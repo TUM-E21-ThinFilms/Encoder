@@ -4,8 +4,10 @@ from e21_util.simultaneous import StoppableThread
 from devcontroller.encoder import EncoderFactory
 
 class PositionWatchdog(StoppableThread):
-    def __init__(self, comm: AbstractCommunication):
+    def __init__(self, comm):
         super(PositionWatchdog, self).__init__()
+        if not isinstance(comm,  AbstractCommunication):
+            raise RuntimeError("comm must be an instance of AbstractCommunication")
         self._comm = comm
         self._initialized = False
         self._fac = EncoderFactory()

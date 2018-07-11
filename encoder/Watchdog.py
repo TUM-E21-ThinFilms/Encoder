@@ -1,7 +1,8 @@
-from encoder.DataEncoder import Data
+from encoder.DataEncoder import Data, ErrorData
 from encoder.File import AbstractCommunication
 from e21_util.simultaneous import StoppableThread
 from devcontroller.encoder import EncoderFactory
+import time
 
 class PositionWatchdog(StoppableThread):
     def __init__(self, comm):
@@ -35,7 +36,10 @@ class PositionWatchdog(StoppableThread):
 
             self._comm.save(data)
         except BaseException as e:
-            print(e)
+            if isinstance(e, KeyboardInterrupt):
+                raise e
+            self._comm.save(ErrorData())
+        time.sleep(0.1)
             # continue...
 
     def _set_theta(self, data):

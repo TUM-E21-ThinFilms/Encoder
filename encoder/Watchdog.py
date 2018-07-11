@@ -1,7 +1,7 @@
 from encoder.DataEncoder import Data
 from encoder.File import AbstractCommunication
 from e21_util.simultaneous import StoppableThread
-from devcontroller.encoder import EncoderFactory()
+from devcontroller.encoder import EncoderFactory
 
 class PositionWatchdog(StoppableThread):
     def __init__(self, comm: AbstractCommunication):

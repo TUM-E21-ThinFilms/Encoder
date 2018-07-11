@@ -7,6 +7,7 @@ class Data(object):
     KEY_THETA_REFERENCE = 'theta_ref'
     KEY_Z_POSITION = 'z'
     KEY_Z_REFERENCE = 'z_reference'
+    KEY_ERROR = 'error'
 
     def __init__(self, dict):
         if dict is None:
@@ -61,6 +62,11 @@ class Data(object):
 
 
 class ErrorData(Data):
+    def __init__(self, dict):
+        super(ErrorData, self).__init__(dict)
+
+        self._dict[self.KEY_ERROR] = True
+
     def _error(self):
         raise RuntimeError('Encoder data cannot be read')
 

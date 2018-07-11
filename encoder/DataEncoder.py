@@ -25,7 +25,10 @@ class Data(object):
         self._dict[self.KEY_EXCEPTION] = str(exception)
 
     def add_exception(self, excp):
-        self._dict[self.KEY_EXCEPTION] += str(excp)
+        if self.KEY_EXCEPTION in self._dict:
+            self._dict[self.KEY_EXCEPTION] += str(excp)
+        else:
+            self._dict[self.KEY_EXCEPTION] = str(excp)
 
     def get_trigger_count(self):
         return self._dict[self.KEY_TRIGGER_COUNT]

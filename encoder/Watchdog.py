@@ -48,7 +48,6 @@ class PositionWatchdog(StoppableThread):
         except BaseException as e:
             if isinstance(e, KeyboardInterrupt) or isinstance(e, StopException):
                 raise e
-            print(e)
             self._comm.save(ErrorData({}, e))
         time.sleep(0.01)
 

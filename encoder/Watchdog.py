@@ -4,10 +4,11 @@ from e21_util.simultaneous import StoppableThread, StopException
 from devcontroller.encoder import EncoderFactory
 import time
 
+
 class PositionWatchdog(StoppableThread):
     def __init__(self, comm):
         super(PositionWatchdog, self).__init__()
-        if not isinstance(comm,  AbstractCommunication):
+        if not isinstance(comm, AbstractCommunication):
             raise RuntimeError("comm must be an instance of AbstractCommunication")
         self._comm = comm
         self._initialized = False
@@ -15,11 +16,20 @@ class PositionWatchdog(StoppableThread):
         self._encoder = self._fac.get_encoder()
         self._z = self._fac.get_z()
         self._theta = self._fac.get_theta()
-        
+
+    def get_encoder(self):
+        return self._encoder
+
+    def get_z(self):
+        return self._z
+
+    def get_theta(self):
+        return self._theta
+
     def initialize(self):
         if self._initialized is True:
             return
-        
+
         self._fac.initialize()
 
     def do_execute(self):
@@ -38,9 +48,9 @@ class PositionWatchdog(StoppableThread):
         except BaseException as e:
             if isinstance(e, KeyboardInterrupt) or isinstance(e, StopException):
                 raise e
-            self._comm.save(ErrorData({}))
-        time.sleep(0.1)
-            # continue...
+            print(e)
+            self._comm.save(ErrorData({}, e))
+        time.sleep(0.01)
 
     def _set_theta(self, data):
         data.set_position_theta(self._theta.get_angle())

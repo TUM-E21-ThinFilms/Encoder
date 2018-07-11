@@ -1,4 +1,5 @@
 import json
+import time
 
 
 class Data(object):
@@ -8,11 +9,13 @@ class Data(object):
     KEY_Z_POSITION = 'z'
     KEY_Z_REFERENCE = 'z_reference'
     KEY_ERROR = 'error'
+    KEY_TIME = 'time'
+    KEY_EXCEPTION = 'exception'
 
     def __init__(self, dict):
         if dict is None:
             dict = {}
-
+        dict[self.KEY_TIME] = time.time()
         self._dict = dict
 
     def get_trigger_count(self):
@@ -62,10 +65,12 @@ class Data(object):
 
 
 class ErrorData(Data):
-    def __init__(self, dict):
+    def __init__(self, dict, exception=None):
         super(ErrorData, self).__init__(dict)
 
         self._dict[self.KEY_ERROR] = True
+        if not exception is None:
+            self._dict[self.KEY_EXCEPTION] = exception
 
     def _error(self):
         raise RuntimeError('Encoder data cannot be read')

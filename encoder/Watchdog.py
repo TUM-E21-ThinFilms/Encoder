@@ -53,10 +53,16 @@ class PositionWatchdog(StoppableThread):
         time.sleep(0.01)
 
     def _set_theta(self, data):
-        data.set_position_theta(self._theta.get_angle())
-        data.set_trigger_count(self._theta.get_trigger())
-        data.set_reference_theta(self._theta.get_reference())
+        try:
+            data.set_position_theta(self._theta.get_angle())
+            data.set_trigger_count(self._theta.get_trigger())
+            data.set_reference_theta(self._theta.get_reference())
+        except RuntimeError:
+            pass
 
     def _set_z(self, data):
-        data.set_position_z(self._z.get_position())
-        data.set_reference_z(self._z.get_reference())
+        try:
+            data.set_position_z(self._z.get_position())
+            data.set_reference_z(self._z.get_reference())
+        except RuntimeError:
+            pass

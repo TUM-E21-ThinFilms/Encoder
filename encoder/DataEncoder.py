@@ -26,7 +26,7 @@ class Data(object):
 
     def add_exception(self, excp):
         if self.KEY_EXCEPTION in self._dict:
-            self._dict[self.KEY_EXCEPTION] += str(excp)
+            self._dict[self.KEY_EXCEPTION] += ";" + str(excp)
         else:
             self._dict[self.KEY_EXCEPTION] = str(excp)
 
@@ -122,4 +122,4 @@ class DataEncoder(object):
         try:
             return Data(json.loads(encoded_object))
         except:
-            return ErrorData()
+            return ErrorData({})

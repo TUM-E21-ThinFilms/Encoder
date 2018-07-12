@@ -32,6 +32,9 @@ class PositionWatchdog(StoppableThread):
 
         self._fac.initialize()
 
+    def _on_stop(self):
+        self._encoder.disconnect()
+
     def do_execute(self):
         self.initialize()
 

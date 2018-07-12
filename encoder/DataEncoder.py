@@ -18,8 +18,14 @@ class Data(object):
         dict[self.KEY_TIME] = time.time()
         self._dict = dict
 
+    def get_time(self):
+        return self._dict[self.KEY_TIME]
+
     def get_exception(self):
         return self._dict[self.KEY_EXCEPTION]
+
+    def has_exception(self):
+        return (self.KEY_EXCEPTION in self._dict and not self._dict[self.KEY_EXCEPTION] == '')
 
     def set_exception(self, exception):
         self._dict[self.KEY_EXCEPTION] = str(exception)

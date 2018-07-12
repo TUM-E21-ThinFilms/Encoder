@@ -1,6 +1,9 @@
-from encoder.DataEncoder import DataEncoder
+from encoder.DataEncoder import DataEncoder, Data
 
 class AbstractCommunication(object):
+    """
+    :return: Data
+    """
     def load(self):
         raise RuntimeError('No implementation')
 
@@ -13,6 +16,10 @@ class File(AbstractCommunication):
         self._encoder = DataEncoder()
 
     def load(self):
+        """
+
+        :return: encoder.DataEncoder.Data
+        """
         with open(self._path, 'r') as f:
             data = self._encoder.decode(f.read())
             return data

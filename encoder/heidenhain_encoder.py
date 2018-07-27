@@ -106,12 +106,12 @@ class HeidenhainEncoder(object):
 
 
 class ThetaEncoder(object):
-    def __init__(self, encoder):
+    def __init__(self, encoder_obj):
 
-        if not isinstance(encoder, HeidenhainEncoder):
+        if not isinstance(encoder_obj, HeidenhainEncoder):
             raise RuntimeError("encoder must be an instance of HeidenhainEncoder")
 
-        self._encoder = encoder
+        self._encoder = encoder_obj
         self._calibration = encoder.calibration.THETA_CALIBRATION
 
     def info(self):
@@ -173,11 +173,11 @@ class ThetaEncoder(object):
 
 
 class ZEncoder(object):
-    def __init__(self, encoder):
-        if not isinstance(encoder, HeidenhainEncoder):
+    def __init__(self, encoder_obj):
+        if not isinstance(encoder_obj, HeidenhainEncoder):
             raise RuntimeError("encoder must be an instance of HeidenhainEncoder")
 
-        self._encoder = encoder
+        self._encoder = encoder_obj
         self._calibration = encoder.calibration.Z_CALIBRATION
 
     def info(self):

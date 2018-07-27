@@ -31,6 +31,7 @@ class PositionWatchdog(StoppableThread):
             return
 
         self._fac.initialize()
+        self._encoder.clear_buffer()
 
     def _on_stop(self):
         self._encoder.disconnect()
@@ -39,7 +40,6 @@ class PositionWatchdog(StoppableThread):
         self.initialize()
 
         try:
-            self._encoder.clear_buffer()
             self._encoder.read()
 
             data = Data({})
@@ -54,7 +54,6 @@ class PositionWatchdog(StoppableThread):
             raise e
         except BaseException as e:
             self._comm.save(ErrorData({}, e))
-        time.sleep(0.01)
 
     def _set_theta(self, data):
         try:

@@ -4,7 +4,7 @@ from encoder.File import AbstractCommunication
 
 class EncoderInterface(object):
 
-    PARAMETER_TIME_DIFF = 5 # more than 5 sec time diff is not allowed
+    PARAMETER_TIME_DIFF = 1 # more than 1 sec time diff is not allowed
     PARAMETER_ANGLE_DIFF = 13
     PARAMETER_ANGLE_TOL = 0.1
 

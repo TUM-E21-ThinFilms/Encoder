@@ -27,6 +27,9 @@ class EncoderInterface(object):
             raise RuntimeError("No reference given, cannot calculate angle")
 
         ref = data.get_references_theta()
+        if not len(ref) == 2:
+            raise RuntimeError("Should have exactly two reference positions")
+
         diff = abs(ref[0] - ref[1])
 
         if abs(diff - self.PARAMETER_ANGLE_DIFF) > self.PARAMETER_ANGLE_TOL:

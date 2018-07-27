@@ -1,4 +1,4 @@
-from encoder.DataEncoder import DataEncoder, Data
+from encoder.DataEncoder import DataEncoder
 from e21_util.lock import ENCODER_FILE_LOCK
 
 class AbstractCommunication(object):
@@ -24,7 +24,10 @@ class File(AbstractCommunication):
         """
         with self._lock:
             with open(self._path, 'r') as f:
-                data = self._encoder.decode(f.read())
+                raw = f.read()
+                if raw == "":
+                    raise RuntimeError("No data in file found.")
+                data = self._encoder.decode(raw)
                 return data
 
     def save(self, data):

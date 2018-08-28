@@ -202,7 +202,7 @@ class ZEncoder(object):
         if not self.has_reference():
             raise RuntimeError("Cannot read position, no valid reference given")
 
-        return self._encoder.get_encoder().getZData().getAbsoluteDegree() - self._calibration
+        return self._encoder.get_encoder().getZData().getAbsolutePosition() - self._calibration
 
     def get_trigger(self):
         self._encoder.assert_connected()
@@ -270,6 +270,31 @@ class ReferenceMarkHelper(object):
             axis.stop_reference()
             if not is_connected:
                 self._encoder.disconnect()
+
+    def _reset(self, axis):
+        self._encoder.read()
+
+        is_connected = False
+        try:
+            is_connected = self._encoder.is_connected()
+            if not is_connected:
+                self._encoder.connect()
+
+            self._encoder.clear_buffer()
+            axis.clear_reference()
+        finally:
+            if not is_connected:
+                self._encoder.disconnect()
+
+    def reset_theta(self):
+        self._reset(ThetaEncoder(self._encoder))
+
+    def reset_z(self):
+        self._reset(ZEncoder(self._encoder))
+
+    def reset(self):
+        self.reset_theta()
+        self.reset_z()
 
     def search_theta(self):
         self._search(ThetaEncoder(self._encoder))

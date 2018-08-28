@@ -24,7 +24,7 @@ class EncoderInterface(object):
 
     def _check_reference_theta(self, data):
         if not data.has_reference_theta():
-            raise RuntimeError("No reference given, cannot calculate angle")
+            raise RuntimeError("No reference given, cannot calculate theta-angle")
 
         ref = data.get_references_theta()
         if not len(ref) == 2:
@@ -43,8 +43,14 @@ class EncoderInterface(object):
         return data.get_position_theta()
 
     def _check_reference_z(self, data):
+        if not data.has_reference_z():
+            raise RuntimeError("No reference given, cannot calculate z-position")
+
+        ref = data.get_references_z()
+        if not len(ref) == 2:
+            raise RuntimeError("Should have exactly two reference positions")
+
         pass
-        #todo
 
     def get_z(self):
         data = self.get_data()

@@ -15,8 +15,10 @@ class Data(object):
     def __init__(self, dict):
         if dict is None:
             dict = {}
-        dict[self.KEY_TIME] = time.time()
         self._dict = dict
+
+    def set_time(self, time):
+        self._dict[self.KEY_TIME] = time
 
     def get_time(self):
         return self._dict[self.KEY_TIME]
@@ -122,6 +124,9 @@ class DataEncoder(object):
     def encode(self, object):
         if not isinstance(object, Data):
             raise RuntimeError("object is not an instance of Data")
+
+        object.set_time(time.time())
+
         return json.dumps(object.get_dict())
 
     def decode(self, encoded_object):

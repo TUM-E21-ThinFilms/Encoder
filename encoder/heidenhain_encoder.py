@@ -247,16 +247,15 @@ class ReferenceMarkHelper(object):
         self._encoder = encoder
 
     def _search(self, axis):
-
-        self._encoder.read()
-        if axis.has_reference():
-            raise RuntimeError("Axis is already referenced!")
-
         is_connected = False
         try:
             is_connected = self._encoder.is_connected()
             if not is_connected:
                 self._encoder.connect()
+
+            self._encoder.read()
+            if axis.has_reference():
+                raise RuntimeError("Axis is already referenced!")
 
             self._encoder.clear_buffer()
             axis.clear_reference()
@@ -266,6 +265,7 @@ class ReferenceMarkHelper(object):
                 print(axis.info())
         except BaseException as e:
             print(e)
+            raise e
         finally:
             axis.stop_reference()
             if not is_connected:

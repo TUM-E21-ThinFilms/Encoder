@@ -192,7 +192,7 @@ class ZEncoder(object):
             raise RuntimeError("Cannot read position, no valid reference given")
 
         z_data = self._encoder.get_encoder().getZData()
-        data = z_data.data.getData()
+        data = z_data.getData()
         ref1 = data.ref1
         ref2 = data.ref2
 

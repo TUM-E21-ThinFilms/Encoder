@@ -153,6 +153,10 @@ class ThetaEncoder(object):
         self._encoder.assert_connected()
         return self._encoder.get_encoder().getThetaData().hasReference()
 
+    def received_reference(self):
+        self._encoder.assert_connected()
+        return self._encoder.get_encoder().getThetaData().receivedReference()
+
     def clear_reference(self):
         self._encoder.assert_connected()
         return self._encoder.get_encoder().clearReferenceTheta()
@@ -220,6 +224,10 @@ class ZEncoder(object):
         self._encoder.assert_connected()
         return self._encoder.get_encoder().getZData().hasReference()
 
+    def received_reference(self):
+        self._encoder.assert_connected()
+        return self._encoder.get_encoder().getZData().receivedReference()
+
     def clear_reference(self):
         self._encoder.assert_connected()
         return self._encoder.get_encoder().clearReferenceZ()
@@ -260,7 +268,7 @@ class ReferenceMarkHelper(object):
             self._encoder.clear_buffer()
             axis.clear_reference()
             axis.start_reference()
-            while not axis.has_reference():
+            while not axis.has_reference() and not axis.received_reference():
                 self._encoder.read()
                 print(axis.info())
         except BaseException as e:

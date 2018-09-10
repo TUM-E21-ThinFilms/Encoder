@@ -268,7 +268,7 @@ class ReferenceMarkHelper(object):
             self._encoder.clear_buffer()
             axis.clear_reference()
             axis.start_reference()
-            while not axis.has_reference() and not axis.received_reference():
+            while not axis.has_reference() or not axis.received_reference():
                 self._encoder.read()
                 print(axis.info())
         except BaseException as e:

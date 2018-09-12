@@ -5,20 +5,28 @@ from e21_util.lock import HEIDENHAIN_LOCK
 
 class EncoderFactory(object):
     def __init__(self):
-        self._encoder = HeidenhainEncoder()
-        self._z = ZEncoder(self._encoder)
-        self._theta = ThetaEncoder(self._encoder)
+        # Lazy init
+        self._encoder = None
+        self._z = None
+        self._theta = None
 
     def initialize(self):
-        self._encoder.connect()
+        self.get_encoder().connect()
 
     def get_encoder(self):
+        if self._encoder is None:
+            self._encoder is HeidenhainEncoder()
+
         return self._encoder
 
     def get_z(self):
+        if self._z is None:
+            self._z = ZEncoder(self.get_encoder())
         return self._z
 
     def get_theta(self):
+        if self._theta is None:
+            self._theta = ThetaEncoder(self.get_encoder())
         return self._theta
 
 

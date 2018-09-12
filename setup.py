@@ -22,7 +22,7 @@ requires = ['e21_util']
 desc = ('Encoder')
 
 setup(
-    name='Encoder',
+    name='encoder',
     version=__import__('encoder').__version__,
     author='Alexander Book',
     author_email='alexander.book@frm2.tum.de',

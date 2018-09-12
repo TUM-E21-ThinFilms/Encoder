@@ -1,20 +1,26 @@
 from encoder.DataEncoder import DataEncoder
 from e21_util.lock import ENCODER_FILE_LOCK
 
+
 class AbstractCommunication(object):
     """
     :return: Data
     """
+
     def load(self):
         raise RuntimeError('No implementation')
 
     def save(self, data):
         raise RuntimeError('No implementation')
 
+
 class File(AbstractCommunication):
-    def __init__(self, filepath):
+    def __init__(self, filepath, encoder=None):
         self._path = filepath
-        self._encoder = DataEncoder()
+        if encoder is None:
+            encoder = DataEncoder()
+
+        self._encoder = encoder
         self._lock = ENCODER_FILE_LOCK()
 
     def load(self):

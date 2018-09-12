@@ -6,7 +6,7 @@ from e21_util.paths import Paths
 
 
 class Factory(object):
-    def __init__(self, encoder_factory):
+    def __init__(self, encoder_factory=None):
         if not isinstance(encoder_factory, EncoderFactory):
             encoder_factory = EncoderFactory()
 

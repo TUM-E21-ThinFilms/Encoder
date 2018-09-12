@@ -4,13 +4,18 @@ from e21_util.simultaneous import StoppableThread, StopException
 from encoder.heidenhain_encoder import EncoderFactory
 
 class PositionWatchdog(StoppableThread):
-    def __init__(self, comm):
+    def __init__(self, comm, encoder_factory):
         super(PositionWatchdog, self).__init__()
+
         if not isinstance(comm, AbstractCommunication):
             raise RuntimeError("comm must be an instance of AbstractCommunication")
+
+        if not isinstance(encoder_factory, EncoderFactory):
+            raise RuntimeError("encoder_factory must be an instance of EncoderFactory")
+
         self._comm = comm
         self._initialized = False
-        self._fac = EncoderFactory()
+        self._fac = encoder_factory
         self._encoder = self._fac.get_encoder()
         self._z = self._fac.get_z()
         self._theta = self._fac.get_theta()

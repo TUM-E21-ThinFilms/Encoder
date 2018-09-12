@@ -16,10 +16,10 @@ class Factory(object):
         return self._fac
 
     def get_communication(self):
-        return File(Paths().ENCODER_PATH, self._fac.get_encoder())
+        return File(Paths().ENCODER_PATH)
 
     def get_watchdog(self):
-        return PositionWatchdog(self.get_communication())
+        return PositionWatchdog(self.get_communication(), self._fac)
 
     def get_interface(self, comm=None):
         if not isinstance(comm, AbstractCommunication) and not comm is None:

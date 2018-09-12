@@ -17,6 +17,10 @@ class AbstractCommunication(object):
 class File(AbstractCommunication):
     def __init__(self, filepath, encoder=None):
         self._path = filepath
+
+        if not encoder is None and not isinstance(encoder, DataEncoder):
+            raise RuntimeError("Given encoder must be an instance of DataEncoder")
+
         if encoder is None:
             encoder = DataEncoder()
 
